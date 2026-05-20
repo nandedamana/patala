@@ -1,0 +1,7 @@
+(library
+ (name patala))
+
+(rocq.extraction
+ (prelude prelude)
+ (extracted_modules Inst)
+ (theories Stdlib patala))
