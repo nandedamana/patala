@@ -1,7 +1,7 @@
 From Corelib Require Extraction.
 
-From patala Require Inst.
+From patala Require BpfIsa.
 
 Separate Extraction
-  Inst.InstClass
+  BpfIsa.InstClass
 .
