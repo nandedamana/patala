@@ -4,6 +4,7 @@ Variant Register :=
   | R6 | R7 | R8 | R9      (* callee-saved registers *)
   | R10.                   (* read-only frame pointer *)
 
+(* Low-level; TODO REM? *)
 Variant InstClass :=
   | LD
   | LDX
@@ -14,6 +15,7 @@ Variant InstClass :=
   | JMP32
   | ALU64.
 
+(* Low-level; TODO REM? *)
 Variant AluSrcType :=
   | K
   | X.
@@ -56,10 +58,15 @@ Variant JumpOp :=
 
 Variant LoadStoreMode :=
   | IMM
+  (* Legacy
   | ABS
   | IND
+  *)
   | MEM
+  | MEMSX.
+  (* TODO
   | ATOMIC.
+  *)
 
 Variant LoadStoreSize :=
   | W
@@ -79,6 +86,17 @@ Variant ComplexAtomicOp :=
   | XCHG
   | CMPXCHG.
 
+Definition Immvalue := nat.
+
+Variant AluSource :=
+  | ImmAluSource : Immvalue -> AluSource
+  | RegAluSource : Register -> AluSource.
+
+(** This data type is a custom take on the eBPF instructions, residing
+at a higher level compared to the official eBPF ISA documentation. The
+official documentation seems to focus more on the binary encoding. *)
+
 Variant Inst :=
-  | LoadInst : LoadStoreMode -> LoadStoreSize -> Inst. (* TODO src, dest *)
+  | AluInst32 : AluOp -> AluSource -> Register -> Inst
+  | AluInst64 : AluOp -> AluSource -> Register -> Inst.
 (* TODO *)
