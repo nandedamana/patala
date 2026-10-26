@@ -1,0 +1,28 @@
+name: Build
+
+on:
+  push:
+    branches: [ 'main', 'dev' ]
+  pull_request:
+    branches: [ 'main' ]
+
+jobs:
+  build-rocq-stable-free:
+    runs-on: ubuntu-latest  # container actions require GNU/Linux
+    container:
+      image: rocq/rocq-prover:9.1
+      options: --user root # otherwise checkout fails
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Make sure no admitted proofs
+        run: |
+          test "$(rgrep --include '*.v' Admitted /__w/patala/patala/|wc -l)" -eq 0
+
+      - name: Dune build
+        run: |
+          whoami
+          pwd
+          chown -R rocq:rocq .
+          su -s /bin/bash rocq -c 'whoami; pwd; source ~/.profile && cd /__w/patala/patala && dune build'
