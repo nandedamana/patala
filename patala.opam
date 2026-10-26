@@ -7,7 +7,7 @@ maintainer: ["Nandakumar Edamana <nandakumar@nandakumar.co.in>"]
 authors: ["Nandakumar Edamana <nandakumar@nandakumar.co.in>"]
 tags: ["ebpf" "bpf" "linux" "networking"]
 depends: [
-  "dune" {>= "3.22"}
+  "dune" {>= "3.21"}
   "ocaml"
   "odoc" {with-doc}
 ]
