@@ -89,6 +89,7 @@ Variant ComplexAtomicOp :=
 (* -------------------------------------------------------------------------- *)
 
 From Stdlib Require Import
+  Lia
   ZArith.
 Local Open Scope Z_scope.
 
@@ -102,6 +103,21 @@ End uint.
 
 Definition u32 := uint 32.
 Definition u64 := uint 64.
+
+Definition imm0_u32 : u32.
+  exists 0. compute. split; easy.
+Defined.
+
+Definition imm0_u64 : u64.
+  exists 0. compute. split; easy.
+Defined.
+
+Definition u32_to_u64 (u : u32) : u64.
+  destruct u as [u uh].
+  exists u.
+  unfold modulus in *.
+  lia.
+Qed.
 
 (* -------------------------------------------------------------------------- *)
 

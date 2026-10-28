@@ -4,6 +4,8 @@
 \#*
 *.swp
 
+.lia.cache
+
 # Copied from https://github.com/github/gitignore
 
 *.annot

@@ -2,4 +2,4 @@
 
 (rocq.theory
  (name patala)
- (theories Stdlib))
+ (theories Stdlib ExtLib ITree Paco))
