@@ -99,6 +99,16 @@ Section uint.
   Definition modulus := 2 ^ Z.of_nat SIZE.
 
   Definition uint := { x | 0 <= x < modulus }.
+
+  Definition uint_repr (n : Z) : uint.
+    exists (n mod modulus).
+    unfold modulus.
+    apply Z.mod_pos_bound.
+    lia.
+  Qed.
+
+  Definition uint2Z (a : uint) := proj1_sig a.
+  Coercion uint2Z : uint >-> Z.
 End uint.
 
 Definition u32 := uint 32.
@@ -118,6 +128,9 @@ Definition u32_to_u64 (u : u32) : u64.
   unfold modulus in *.
   lia.
 Qed.
+
+(* TODO FIXME *)
+Definition uint_add {SIZE} (a b : uint SIZE) := a.
 
 (* -------------------------------------------------------------------------- *)
 

@@ -8,6 +8,7 @@ From ITree Require Import
   ITreeFacts.
 
 Local Open Scope string_scope.
+Local Open Scope itree_scope.
 
 Variant RegEvent : Type -> Type :=
   | GetReg (r : Register) : RegEvent u64
@@ -40,12 +41,21 @@ Section denote.
     | RegAluSource64 r => trigger (GetReg r)
     end.
 
+  Definition do_alu32 op (src dst : u32) : u32 :=
+    match op with
+    | ADD => uint_add src dst
+    | _ => dst (* TODO FIXME *)
+    end.
+
   (* TODO FIXME match on op and act accordingly *)
   Definition denote_instr (i : Inst) : itree E unit :=
     match i with
     | AluInst32 op src dst =>
-        srcden <- denote_alusrc32 src ;; trigger (SetReg dst (u32_to_u64 srcden))
+        srcden <- denote_alusrc32 src ;;
+        dstden <- trigger (GetReg dst) ;;
+        let dstden := imm0_u32 in
+        trigger (SetReg dst (u32_to_u64 (do_alu32 op srcden (uint_repr 32 (uint2Z _ dstden)))))
     | AluInst64 op src dst =>
-        srcden <- denote_alusrc64 src ;; trigger (SetReg dst srcden)
+        srcden <- denote_alusrc64 src ;; trigger (SetReg dst srcden) (* TODO FIXME *)
     end.
 End denote.
