@@ -86,17 +86,38 @@ Variant ComplexAtomicOp :=
   | XCHG
   | CMPXCHG.
 
-Definition Immvalue := nat.
+(* -------------------------------------------------------------------------- *)
 
-Variant AluSource :=
-  | ImmAluSource : Immvalue -> AluSource
-  | RegAluSource : Register -> AluSource.
+From Stdlib Require Import
+  ZArith.
+Local Open Scope Z_scope.
+
+(* TODO use the one from trirocq *)
+Section uint.
+  Variable SIZE : nat.
+  Definition modulus := 2 ^ Z.of_nat SIZE.
+
+  Definition uint := { x | 0 <= x < modulus }.
+End uint.
+
+Definition u32 := uint 32.
+Definition u64 := uint 64.
+
+(* -------------------------------------------------------------------------- *)
+
+Variant AluSource32 :=
+  | ImmAluSource32 : u32 -> AluSource32
+  | RegAluSource32 : Register -> AluSource32.
+
+Variant AluSource64 :=
+  | ImmAluSource64 : u64 -> AluSource64
+  | RegAluSource64 : Register -> AluSource64.
 
 (** This data type is a custom take on the eBPF instructions, residing
 at a higher level compared to the official eBPF ISA documentation. The
 official documentation seems to focus more on the binary encoding. *)
 
 Variant Inst :=
-  | AluInst32 : AluOp -> AluSource -> Register -> Inst
-  | AluInst64 : AluOp -> AluSource -> Register -> Inst.
+  | AluInst32 : AluOp -> AluSource32 -> Register -> Inst
+  | AluInst64 : AluOp -> AluSource64 -> Register -> Inst.
 (* TODO *)
