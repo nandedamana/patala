@@ -1,0 +1,3 @@
+[submodule "vendor/trirocq"]
+	path = vendor/trirocq
+	url = https://github.com/nandedamana/trirocq

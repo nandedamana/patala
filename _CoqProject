@@ -1,1 +1,2 @@
 -Q _build/default/theories patala
+-Q _build/default/vendor/trirocq/Ztheories trirocq.Z
