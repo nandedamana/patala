@@ -3,5 +3,5 @@
 
 (rocq.extraction
  (prelude prelude)
- (extracted_modules Inst)
+ (extracted_modules BpfIsa)
  (theories Stdlib patala))

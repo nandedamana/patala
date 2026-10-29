@@ -1,4 +1,5 @@
 (include_subdirs qualified)
 
 (rocq.theory
- (name patala))
+ (name patala)
+ (theories Stdlib ExtLib ITree Paco))
